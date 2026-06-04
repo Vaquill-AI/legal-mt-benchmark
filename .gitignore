@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.venv-bench/
+venv/
+
+# Env / secrets
+.env
+*.key
+
+# Downloaded dataset (fetched via data/fetch_dataset.sh, not redistributed)
+data/wmt25-legal/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
