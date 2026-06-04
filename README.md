@@ -31,9 +31,9 @@ published at the Tenth Conference on Machine Translation (WMT 2025).
 - Upstream: https://github.com/helloboyn/WMT25-TS
 - Paper: Singh, K.B., Kumar, D., & Ekbal, A. (2025). *Evaluation of LLM for
   English to Hindi Legal Domain Machine Translation Systems.* WMT 2025,
-  pp. 823–833. https://aclanthology.org/2025.wmt-1.57
-- 5,000 parallel EN–HI sentences from court judgments, contracts, legal notices
-  and statutory material; word counts 5–54.
+  pp. 823-833. https://aclanthology.org/2025.wmt-1.57
+- 5,000 parallel EN-HI sentences from court judgments, contracts, legal notices
+  and statutory material; word counts 5-54.
 
 We do **not** redistribute the upstream data. `data/fetch_dataset.sh` downloads it
 from the source; `data/transform.md` documents exactly how we stratify it.
@@ -41,7 +41,7 @@ from the source; `data/transform.md` documents exactly how we stratify it.
 ### Our subset (deterministic)
 
 A stratified **500-sentence** subset, fixed **seed = 42**:
-100 short (5–15 words) + 200 medium (16–35) + 200 long (36–54). Same seed → same
+100 short (5-15 words) + 200 medium (16-35) + 200 long (36-54). Same seed → same
 sentences for every system.
 
 ---
@@ -63,14 +63,14 @@ model**.
 
 ## What we measured (in plain English)
 
-For legal translation, the thing that matters most is **accuracy** — does the
+For legal translation, the thing that matters most is **accuracy** - does the
 translation use the **correct legal words**, and does it **mean the same thing**
 as the original? Getting "acquittal" or "bail" wrong can change what a document
-means. **Speed and price are deliberately not part of this comparison** — only
+means. **Speed and price are deliberately not part of this comparison** - only
 how good and how correct the translation is.
 
 We score every system on 7 measures. Here they are in plain words (all on a
-0–100 scale; higher is better unless noted):
+0-100 scale; higher is better unless noted):
 
 | What we call it | What it actually checks | Good score |
 |---|---|---|
@@ -78,7 +78,7 @@ We score every system on 7 measures. Here they are in plain words (all on a
 | **Overall quality** | An AI judge (trained to agree with human experts) rates how good the translation is. Closest thing to a human grade. | higher |
 | **Meaning match** | Does the translation mean the same as the original, even with different words? | higher |
 | **Word match** | How closely the exact words match a professional human translation. | higher |
-| **Character match** | Letter-by-letter closeness — works especially well for Hindi. | higher |
+| **Character match** | Letter-by-letter closeness - works especially well for Hindi. | higher |
 | **Flexible match** | Like word match, but also gives credit for valid synonyms. | higher |
 | **Editing needed** | How much a human would have to fix the output. **Lower is better.** | lower |
 
@@ -93,14 +93,14 @@ METEOR; Editing needed = TER. Details in [the scoring section](#how-the-scores-a
 This section exists so the numbers are not a black box.
 
 **Who computed them.** We (the maintainers) computed every score with standard,
-open-source scoring tools — *not* by hand, and *not* by the model vendors. The
+open-source scoring tools - *not* by hand, and *not* by the model vendors. The
 scoring code is in this repo and is applied **identically to every system**
 (same code, same reference translations), so no system gets favourable
 treatment. Anyone can re-run it on the published per-sentence outputs and get the
 same numbers.
 
 **What each system is graded against.** The "right answers" are the **human
-reference translations** in the IIT Patna WMT25 test suite — human-made, not
+reference translations** in the IIT Patna WMT25 test suite - human-made, not
 ours. Each system's Hindi output is compared to that human reference.
 
 **How each number is produced** (code: [`scripts/score_full_metrics.py`](scripts/score_full_metrics.py), [`scripts/legal_term_accuracy.py`](scripts/legal_term_accuracy.py)):
@@ -116,7 +116,7 @@ ours. Each system's Hindi output is compared to that human reference.
 **How legal-term accuracy ("the accuracy number") is computed.** We keep a fixed
 list of **26 critical legal terms across 6 categories** (court names, party
 designations, procedural, criminal, evidence, statute), each mapped to its
-accepted standard legal-Hindi rendering(s) — e.g. *bail* → जमानत/ज़मानत,
+accepted standard legal-Hindi rendering(s) - e.g. *bail* → जमानत/ज़मानत,
 *acquittal* → दोषमुक्ति, *trial court* → विचारण न्यायालय. For every sentence where
 the English term appears in the source, we check whether the system's Hindi
 output contains an accepted rendering. Then:
@@ -128,7 +128,7 @@ legal-term accuracy = correct renderings / applicable term-instances
 It is an automatic substring check, applied the same way to every system, and is
 an **indicative signal of "did it use the right legal term,"** not a human
 judgement. The exact term list and accepted variants are in
-[`scripts/legal_term_accuracy.py`](scripts/legal_term_accuracy.py) — inspect or
+[`scripts/legal_term_accuracy.py`](scripts/legal_term_accuracy.py) - inspect or
 extend them.
 
 **These are automatic metrics.** They correlate with, but do not replace, human
@@ -141,7 +141,7 @@ evaluation. We disclose the number of outputs scored (`n`) and API errors
 
 ### The two headline numbers
 
-**Best overall quality** (COMET — the AI-judge score that best matches human
+**Best overall quality** (COMET - the AI-judge score that best matches human
 experts, and the metric we rank by):
 
 | Best overall quality | COMET |
@@ -151,7 +151,7 @@ experts, and the metric we rank by):
 | GPT-5.5 (plain model) | 81.08 |
 
 **Most accurate on legal terms** (did it use the correct standard legal-Hindi
-word — what matters most to a court):
+word - what matters most to a court):
 
 | Most accurate on legal terms | Legal-term accuracy |
 |---|---|
@@ -161,7 +161,7 @@ word — what matters most to a court):
 
 So the honest picture: **Anuvad running on Claude Opus tops the table on overall
 quality**, by a hair, while **plain Claude Opus is the most accurate on legal
-terms.** Both are real, reproducible numbers — read the caveats below before
+terms.** Both are real, reproducible numbers - read the caveats below before
 quoting either.
 
 ![Legal-term accuracy and overall quality by system](results/chart_bleu_comet.png)
@@ -204,7 +204,7 @@ June re-run (0 errors). All models run without extended reasoning/thinking.*
   GPT-5.5 and the GPT-4 family. Claude Sonnet 4.6 is close behind (98.7% term
   accuracy) at a fraction of Opus's cost.
 - **Anuvad on Opus tops overall quality (COMET 81.25), but only barely.** It edges
-  plain Opus (81.10) and GPT-5.5 (81.08) on COMET — a **0.15-point margin, within
+  plain Opus (81.10) and GPT-5.5 (81.08) on COMET - a **0.15-point margin, within
   the noise.** On the other six measures Anuvad-on-Opus sits *below* plain Opus
   (e.g. BLEU 33.15 vs 35.45, term accuracy 96.7% vs 99.0%). So "Anuvad ranks #1"
   is true **only** for COMET; do not read it as beating Opus across the board.
@@ -218,7 +218,7 @@ June re-run (0 errors). All models run without extended reasoning/thinking.*
   500 with **0 errors** and scored higher (COMET 80.21 vs 79.71) than April's
   111-error run.
 - **mayura:v1 is the weakest option** for legal Hindi (raw COMET 76.8, term
-  85.9%) — confirming `sarvam-translate:v1` (which Anuvad uses) is the right
+  85.9%) - confirming `sarvam-translate:v1` (which Anuvad uses) is the right
   Sarvam model.
 
 No single system wins every metric; we report all seven so readers can weight
@@ -229,7 +229,7 @@ them for their own use case.
 ## What this benchmark does *not* measure
 
 A score here reflects **per-sentence translation of clean text against one human
-reference**. That is a fair, useful test — but it is not the whole job of legal
+reference**. That is a fair, useful test - but it is not the whole job of legal
 translation. A high score does not certify fitness for a real document workflow,
 because several things that matter are deliberately out of scope. They are also
 where a raw model and a translation *product* genuinely differ:
@@ -237,17 +237,17 @@ where a raw model and a translation *product* genuinely differ:
 - **Document-level terminology consistency.** A judgment may use the same term
   forty times; a raw model is free to render it forty slightly different ways. A
   product that enforces one standard term throughout (e.g. from the Government's
-  Vidhi Shabdavali glossary) is rewarded nowhere here — sentences are scored
+  Vidhi Shabdavali glossary) is rewarded nowhere here - sentences are scored
   independently.
 - **Verbatim preservation of citations, section numbers, dates and figures.**
   Overlap metrics reward fluent rewording, not keeping `(2003) 2 SCC 518`,
   `Section 482 CrPC`, `15.03.2024` or `Rs. 50,000` exactly intact. In a legal
-  document, paraphrasing these is unacceptable — but a benchmark cannot see it.
+  document, paraphrasing these is unacceptable - but a benchmark cannot see it.
 - **Scanned and legacy-font documents.** A large share of real Indian court
   records (older orders, FIRs, exhibits from the Hindi belt) are scans, or are
   encoded in legacy fonts such as **KrutiDev**. As plain text these come out as
   gibberish, so a raw model cannot translate them at all. This benchmark uses
-  only clean digital text, so it never tests this — yet in practice it is the
+  only clean digital text, so it never tests this - yet in practice it is the
   difference between translating a document and not being able to open it.
 - **Rare / long-tail legal terms.** The term-accuracy check covers 26 common
   terms; specialised terminology is not tested.
@@ -275,7 +275,7 @@ python scripts/score_full_metrics.py               # writes results/benchmark_fu
 The **Anuvad product** rows are produced by `scripts/benchmark_anuvad.py`, which
 calls Vaquill's proprietary translation pipeline (glossary + post-processing) and
 therefore needs Vaquill's backend and glossary database. **You cannot reproduce
-the Anuvad pipeline from this repo** — but we publish **every Anuvad per-sentence
+the Anuvad pipeline from this repo** - but we publish **every Anuvad per-sentence
 output** in `results/`, so anyone can independently re-score and audit the Anuvad
 numbers with `score_full_metrics.py`. That is the honest line: the raw-model
 benchmark is fully open; the product's *outputs* are open and auditable; the
@@ -308,13 +308,13 @@ results/
   flat while improving terminology. We report COMET and term accuracy precisely
   so quality is not judged on overlap alone.
 - **Term-accuracy ceiling.** The 26 terms are common; strong models already score
-  ~90–95%. The glossary's larger value is the long tail of specialised terms,
+  ~90-95%. The glossary's larger value is the long tail of specialised terms,
   which this metric under-counts.
 - **API errors.** Some raw runs had transient API failures (disclosed per system
   in the `errors` / `n` columns); those systems are scored on their successful
   outputs.
 - **Subset, not full set.** 500 of 5,000 sentences. A different seed shifts
-  absolute scores ~1–2 BLEU but not the relative picture.
+  absolute scores ~1-2 BLEU but not the relative picture.
 - **Automatic metrics, not human evaluation.** These correlate with, but do not
   replace, human judgment.
 

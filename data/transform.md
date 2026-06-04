@@ -7,8 +7,8 @@ This documents exactly how we go from the upstream WMT25-TS files to the
 
 Two parallel, line-aligned files from upstream (`data/wmt25-legal/`):
 
-- `eng-hin-test.eng.txt` — English source, one sentence per line
-- `eng-hin-test.hin.txt` — Hindi human reference, one sentence per line
+- `eng-hin-test.eng.txt` - English source, one sentence per line
+- `eng-hin-test.hin.txt` - Hindi human reference, one sentence per line
 
 Line *i* of the English file corresponds to line *i* of the Hindi file.
 
@@ -25,9 +25,9 @@ We bucket every pair by **English word count** (`len(en.split())`):
 
 | Bucket | Word count | Sentences sampled |
 |---|---|---|
-| short  | 5–15  | 100 |
-| medium | 16–35 | 200 |
-| long   | 36–54 | 200 |
+| short  | 5-15  | 100 |
+| medium | 16-35 | 200 |
+| long   | 36-54 | 200 |
 
 Sampling uses Python's `random.sample` with a **fixed seed of 42**, so the same
 500 sentences are selected on every run and for every system. See
@@ -38,5 +38,5 @@ both the raw-model runner and the Anuvad runner import).
 
 Scoring 500 of the 5,000 sentences keeps API cost and runtime low while staying
 statistically meaningful. Re-running with a different seed shifts absolute scores
-by roughly 1–2 BLEU but does not change the relative ranking of systems. To score
+by roughly 1-2 BLEU but does not change the relative ranking of systems. To score
 the full 5,000, change `n_small/n_medium/n_large` in `load_dataset`.
