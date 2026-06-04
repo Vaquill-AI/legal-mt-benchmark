@@ -10,6 +10,19 @@
   },
   "systems": [
     {
+      "system": "GPT-5.5",
+      "type": "raw_model",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 32.13,
+      "chrf_pp": 58.18,
+      "ter": 54.64,
+      "meteor": 51.8,
+      "bertscore_f1": 88.2,
+      "comet": 81.08,
+      "term_acc_pct": 95.7
+    },
+    {
       "system": "Anuvad-gpt54mini",
       "type": "product",
       "n_scored": 500,
@@ -36,6 +49,19 @@
       "term_acc_pct": 94.6
     },
     {
+      "system": "Anuvad-gpt55",
+      "type": "product",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 30.71,
+      "chrf_pp": 56.28,
+      "ter": 56.39,
+      "meteor": 50.94,
+      "bertscore_f1": 87.5,
+      "comet": 80.59,
+      "term_acc_pct": 97.0
+    },
+    {
       "system": "Anuvad-gpt54",
       "type": "product",
       "n_scored": 500,
@@ -60,6 +86,19 @@
       "bertscore_f1": 86.54,
       "comet": 80.31,
       "term_acc_pct": 94.6
+    },
+    {
+      "system": "GPT-5.4-mini-rerun",
+      "type": "raw_model",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 29.95,
+      "chrf_pp": 56.15,
+      "ter": 56.93,
+      "meteor": 50.05,
+      "bertscore_f1": 87.49,
+      "comet": 80.21,
+      "term_acc_pct": 95.3
     },
     {
       "system": "Google-Translate",
@@ -140,6 +179,19 @@
       "term_acc_pct": 96.0
     },
     {
+      "system": "Anuvad-mayura",
+      "type": "product",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 29.57,
+      "chrf_pp": 55.74,
+      "ter": 57.96,
+      "meteor": 48.4,
+      "bertscore_f1": 87.09,
+      "comet": 78.52,
+      "term_acc_pct": 95.0
+    },
+    {
       "system": "GPT-4o-mini",
       "type": "raw_model",
       "n_scored": 500,
@@ -151,6 +203,19 @@
       "bertscore_f1": 85.81,
       "comet": 78.34,
       "term_acc_pct": 91.0
+    },
+    {
+      "system": "Sarvam-mayura",
+      "type": "raw_model",
+      "n_scored": 499,
+      "errors": 1,
+      "bleu": 23.79,
+      "chrf_pp": 48.69,
+      "ter": 64.79,
+      "meteor": 43.47,
+      "bertscore_f1": 85.3,
+      "comet": 76.8,
+      "term_acc_pct": 85.9
     }
   ]
 }
