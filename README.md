@@ -212,6 +212,42 @@ original April run (111 API errors) and a clean June re-run (0 errors). "Anuvad-
 No single system wins every metric; we report all seven so readers can weight
 them for their own use case.
 
+---
+
+## What this benchmark does *not* measure
+
+A score here reflects **per-sentence translation of clean text against one human
+reference**. That is a fair, useful test — but it is not the whole job of legal
+translation. A high score does not certify fitness for a real document workflow,
+because several things that matter are deliberately out of scope. They are also
+where a raw model and a translation *product* genuinely differ:
+
+- **Document-level terminology consistency.** A judgment may use the same term
+  forty times; a raw model is free to render it forty slightly different ways. A
+  product that enforces one standard term throughout (e.g. from the Government's
+  Vidhi Shabdavali glossary) is rewarded nowhere here — sentences are scored
+  independently.
+- **Verbatim preservation of citations, section numbers, dates and figures.**
+  Overlap metrics reward fluent rewording, not keeping `(2003) 2 SCC 518`,
+  `Section 482 CrPC`, `15.03.2024` or `Rs. 50,000` exactly intact. In a legal
+  document, paraphrasing these is unacceptable — but a benchmark cannot see it.
+- **Scanned and legacy-font documents.** A large share of real Indian court
+  records (older orders, FIRs, exhibits from the Hindi belt) are scans, or are
+  encoded in legacy fonts such as **KrutiDev**. As plain text these come out as
+  gibberish, so a raw model cannot translate them at all. This benchmark uses
+  only clean digital text, so it never tests this — yet in practice it is the
+  difference between translating a document and not being able to open it.
+- **Rare / long-tail legal terms.** The term-accuracy check covers 26 common
+  terms; specialised terminology is not tested.
+- **Security and deployment.** Whether sensitive documents can be processed
+  without leaving a controlled environment. A score says nothing about it.
+
+The honest reading: **for translating a clean sentence, use the best frontier
+model. For translating a real legal *document* safely and consistently, the
+model is one component and the legal layer around it does the rest.** Products
+built on these models (Anuvad included) compete largely on that layer, not on a
+one-point overlap score.
+
 ## Reproduce
 
 ```bash
