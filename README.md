@@ -77,9 +77,12 @@ All scores are scaled 0–100 for readability (COMET/BERTScore ×100).
 
 ## Results (run of 2026-06-04, 500-sentence subset)
 
+![BLEU and COMET by system](results/chart_bleu_comet.png)
+
 Ranked by COMET (the metric that best tracks human judgment). **up = higher is
 better, down = lower is better.** Full machine-readable table:
 [`results/benchmark_full_metrics.md`](results/benchmark_full_metrics.md).
+Regenerate the chart with `python scripts/plot_results.py` (needs `matplotlib`).
 
 | Rank | System | Type | BLEU↑ | CHRF++↑ | METEOR↑ | TER↓ | BERTSc↑ | COMET↑ | Term%↑ | n | err |
 |---|---|---|---|---|---|---|---|---|---|---|---|
