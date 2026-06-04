@@ -48,15 +48,16 @@ sentences for every system.
 
 ## Systems
 
-**Raw models** (simple prompt, no glossary): GPT-5.5, GPT-5.4, GPT-5.4-mini,
-GPT-4o, GPT-4o-mini, GPT-4.1, GPT-4.1-mini, Sarvam Translate v1, Sarvam
-mayura:v1, Google Translate.
+**Raw models** (simple prompt, no glossary): Claude Opus 4.8, Claude Sonnet 4.6,
+Claude Haiku 4.5, GPT-5.5, GPT-5.4, GPT-5.4-mini, GPT-4o, GPT-4o-mini, GPT-4.1,
+GPT-4.1-mini, Sarvam Translate v1, Sarvam mayura:v1, Google Translate.
 
-**Products** (a base engine + a domain layer): **Anuvad** on five bases
-(GPT-5.5, GPT-5.4, GPT-5.4-mini, Sarvam Translate v1, Sarvam mayura:v1). Anuvad
-adds an 83,355-term legal glossary (Government of India's Vidhi Shabdavali),
-legal-term / citation / date / currency preservation, and a review pass. This
-lets us measure the **lift the product layer adds on each base model**.
+**Products** (a base engine + a domain layer): **Anuvad** on six bases (Claude
+Opus 4.8, GPT-5.5, GPT-5.4, GPT-5.4-mini, Sarvam Translate v1, Sarvam mayura:v1).
+Anuvad adds an 83,355-term legal glossary (Government of India's Vidhi
+Shabdavali), legal-term / citation / date / currency preservation, and a review
+pass. This lets us measure the **lift the product layer adds on each base
+model**.
 
 ---
 
@@ -136,30 +137,34 @@ evaluation. We disclose the number of outputs scored (`n`) and API errors
 
 ---
 
-## Results (run of 2026-06-04, 500 sentences)
+## Results (run of 2026-06-04, 500 sentences, 20 systems)
 
-### The bottom line: accuracy
+### The two headline numbers
 
-For a court or a lawyer, the question that matters is simple: **does it get the
-legal terms right?** A wrong "bail" or "acquittal" can change what a document
-means. On **legal-term accuracy**, the Anuvad product is the most accurate:
+**Best overall quality** (COMET — the AI-judge score that best matches human
+experts, and the metric we rank by):
+
+| Best overall quality | COMET |
+|---|---|
+| **Anuvad (on Claude Opus 4.8)** | **81.25** |
+| Claude Opus 4.8 (plain model) | 81.10 |
+| GPT-5.5 (plain model) | 81.08 |
+
+**Most accurate on legal terms** (did it use the correct standard legal-Hindi
+word — what matters most to a court):
 
 | Most accurate on legal terms | Legal-term accuracy |
 |---|---|
-| Anuvad (on GPT-5.5) | **97.0%** |
-| Anuvad (on GPT-5.4) | **97.0%** |
-| Anuvad (on Sarvam) | 96.0% |
-| GPT-5.5 (plain model) | 95.7% |
-| GPT-5.4-mini (plain model) | 95.5% |
-| … lowest: Sarvam mayura:v1 | 85.9% |
+| **Claude Opus 4.8 (plain model)** | **99.0%** |
+| Claude Sonnet 4.6 (plain model) | 98.7% |
+| Anuvad (on GPT-5.5 / GPT-5.4) | 97.0% |
 
-**On overall quality** (the AI-judge score that best matches human experts), the
-new **GPT-5.5** model is the single best all-round system — a real generational
-jump. So the honest picture today: **GPT-5.5 gives the best all-round
-translation, while Anuvad gives the most reliable legal-term accuracy.** Both are
-shown in full below.
+So the honest picture: **Anuvad running on Claude Opus tops the table on overall
+quality**, by a hair, while **plain Claude Opus is the most accurate on legal
+terms.** Both are real, reproducible numbers — read the caveats below before
+quoting either.
 
-![Translation quality by system](results/chart_bleu_comet.png)
+![Legal-term accuracy and overall quality by system](results/chart_bleu_comet.png)
 
 Every measure, every system (higher is better, except **Editing needed** where
 lower is better). Full machine-readable file:
@@ -167,47 +172,54 @@ lower is better). Full machine-readable file:
 
 | Rank | System | Type | Words | Characters | Flexible | Editing↓ | Meaning | Quality | Legal-term acc. | scored | errors |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **GPT-5.5** | raw | **32.13** | **58.18** | **51.80** | **54.64** | **88.20** | **81.08** | 95.7 | 500 | 0 |
-| 2 | Anuvad-gpt54mini | PRODUCT | 30.59 | 56.88 | 50.78 | 56.34 | 87.75 | 80.67 | 95.7 | 500 | 0 |
-| 3 | GPT-5.4 | raw | 29.19 | 55.72 | 49.62 | 58.20 | 87.32 | 80.65 | 94.6 | 500 | 0 |
-| 4 | Anuvad-gpt55 | PRODUCT | 30.71 | 56.28 | 50.94 | 56.39 | 87.50 | 80.59 | **97.0** | 500 | 0 |
-| 5 | Anuvad-gpt54 | PRODUCT | 30.42 | 56.18 | 50.79 | 56.77 | 87.49 | 80.44 | **97.0** | 500 | 0 |
-| 6 | GPT-4.1 | raw | 27.37 | 53.94 | 47.88 | 60.99 | 86.54 | 80.31 | 94.6 | 500 | 0 |
-| 7 | GPT-5.4-mini (re-run) | raw | 29.95 | 56.15 | 50.05 | 56.93 | 87.49 | 80.21 | 95.3 | 500 | 0 |
-| 8 | Google-Translate | raw | 27.65 | 52.47 | 46.97 | 59.04 | 86.36 | 79.94 | 90.8 | 334 | 166 |
-| 9 | GPT-5.4-mini (orig.) | raw | 29.14 | 55.68 | 48.92 | 58.05 | 87.19 | 79.71 | 95.5 | 389 | 111 |
-| 10 | GPT-4.1-mini | raw | 24.99 | 51.31 | 45.28 | 62.65 | 85.96 | 79.42 | 90.0 | 500 | 0 |
-| 11 | GPT-4o | raw | 28.15 | 53.65 | 47.84 | 60.17 | 86.74 | 79.22 | 94.0 | 500 | 0 |
-| 12 | Sarvam-v1 | raw | 29.14 | 53.41 | 47.88 | 58.09 | 86.83 | 79.08 | 95.0 | 500 | 0 |
-| 13 | Anuvad-sarvam | PRODUCT | 30.12 | 56.14 | 48.73 | 57.54 | 87.18 | 78.53 | 96.0 | 500 | 0 |
-| 14 | Anuvad-mayura | PRODUCT | 29.57 | 55.74 | 48.40 | 57.96 | 87.09 | 78.52 | 95.0 | 500 | 0 |
-| 15 | GPT-4o-mini | raw | 24.12 | 50.50 | 44.85 | 64.24 | 85.81 | 78.34 | 91.0 | 500 | 0 |
-| 16 | Sarvam-mayura | raw | 23.79 | 48.69 | 43.47 | 64.79 | 85.30 | 76.80 | 85.9 | 499 | 1 |
+| 1 | **Anuvad (Claude Opus 4.8)** | PRODUCT | 33.15 | 59.17 | 53.03 | 53.48 | 88.63 | **81.25** | 96.7 | 500 | 0 |
+| 2 | Claude Opus 4.8 | raw | **35.45** | **61.62** | **55.16** | **51.72** | **89.02** | 81.10 | **99.0** | 500 | 0 |
+| 3 | GPT-5.5 | raw | 32.13 | 58.18 | 51.80 | 54.64 | 88.20 | 81.08 | 95.7 | 500 | 0 |
+| 4 | Claude Sonnet 4.6 | raw | 31.62 | 58.69 | 52.39 | 55.42 | 88.19 | 80.79 | 98.7 | 500 | 0 |
+| 5 | Anuvad (GPT-5.4-mini) | PRODUCT | 30.59 | 56.88 | 50.78 | 56.34 | 87.75 | 80.67 | 95.7 | 500 | 0 |
+| 6 | GPT-5.4 | raw | 29.19 | 55.72 | 49.62 | 58.20 | 87.32 | 80.65 | 94.6 | 500 | 0 |
+| 7 | Anuvad (GPT-5.5) | PRODUCT | 30.71 | 56.28 | 50.94 | 56.39 | 87.50 | 80.59 | 97.0 | 500 | 0 |
+| 8 | Anuvad (GPT-5.4) | PRODUCT | 30.42 | 56.18 | 50.79 | 56.77 | 87.49 | 80.44 | 97.0 | 500 | 0 |
+| 9 | GPT-4.1 | raw | 27.37 | 53.94 | 47.88 | 60.99 | 86.54 | 80.31 | 94.6 | 500 | 0 |
+| 10 | GPT-5.4-mini (re-run) | raw | 29.95 | 56.15 | 50.05 | 56.93 | 87.49 | 80.21 | 95.3 | 500 | 0 |
+| 11 | Google Translate | raw | 27.65 | 52.47 | 46.97 | 59.04 | 86.36 | 79.94 | 90.8 | 334 | 166 |
+| 12 | GPT-5.4-mini (orig.) | raw | 29.14 | 55.68 | 48.92 | 58.05 | 87.19 | 79.71 | 95.5 | 389 | 111 |
+| 13 | GPT-4.1-mini | raw | 24.99 | 51.31 | 45.28 | 62.65 | 85.96 | 79.42 | 90.0 | 500 | 0 |
+| 14 | GPT-4o | raw | 28.15 | 53.65 | 47.84 | 60.17 | 86.74 | 79.22 | 94.0 | 500 | 0 |
+| 15 | Sarvam Translate v1 | raw | 29.14 | 53.41 | 47.88 | 58.09 | 86.83 | 79.08 | 95.0 | 500 | 0 |
+| 16 | Claude Haiku 4.5 | raw | 25.44 | 52.54 | 46.96 | 62.70 | 86.25 | 78.72 | 93.0 | 500 | 0 |
+| 17 | Anuvad (Sarvam) | PRODUCT | 30.12 | 56.14 | 48.73 | 57.54 | 87.18 | 78.53 | 96.0 | 500 | 0 |
+| 18 | Anuvad (mayura) | PRODUCT | 29.57 | 55.74 | 48.40 | 57.96 | 87.09 | 78.52 | 95.0 | 500 | 0 |
+| 19 | GPT-4o-mini | raw | 24.12 | 50.50 | 44.85 | 64.24 | 85.81 | 78.34 | 91.0 | 500 | 0 |
+| 20 | Sarvam mayura:v1 | raw | 23.79 | 48.69 | 43.47 | 64.79 | 85.30 | 76.80 | 85.9 | 499 | 1 |
 
-*GPT-5.5 = `gpt-5.5` at `reasoning_effort=none`. GPT-5.4-mini appears twice: the
-original April run (111 API errors) and a clean June re-run (0 errors). "Anuvad-X"
-= the Anuvad product on base engine X.*
+*"Anuvad (X)" = the Anuvad product (glossary + post-processing) on base engine X.
+GPT-5.4-mini appears twice: the original April run (111 API errors) and a clean
+June re-run (0 errors). All models run without extended reasoning/thinking.*
 
 ### What the numbers say (and don't)
 
-- **GPT-5.5 is the new state of the art here.** Raw GPT-5.5 ranks **#1 on six of
-  seven metrics** — BLEU, CHRF++, METEOR, TER, BERTScore and COMET — a clear
-  generational jump over GPT-5.4 (+2.94 BLEU, +2.46 CHRF++, +0.43 COMET).
-- **On a top-tier base, the product layer no longer lifts quality metrics.**
-  Anuvad on GPT-5.5 (COMET 80.59, BLEU 30.71) scores *below* raw GPT-5.5 (COMET
-  81.08, BLEU 32.13). The glossary enforces standard terms that can diverge from
-  the reference's exact wording, which helps terminology but slightly lowers
-  overlap/semantic scores once the base model is already excellent. (On weaker
-  bases the layer *did* lift most metrics — compare Anuvad-sarvam vs raw
-  Sarvam-v1.) **The layer's one remaining, real win is terminology consistency:**
-  Anuvad on GPT-5.5 and GPT-5.4 tie for the **highest legal-term accuracy (97.0%)**,
-  above raw GPT-5.5 (95.7%).
+- **Claude Opus 4.8 is the strongest base model.** Plain Opus leads six of seven
+  measures and is the most accurate on legal terms (99.0%), comfortably ahead of
+  GPT-5.5 and the GPT-4 family. Claude Sonnet 4.6 is close behind (98.7% term
+  accuracy) at a fraction of Opus's cost.
+- **Anuvad on Opus tops overall quality (COMET 81.25), but only barely.** It edges
+  plain Opus (81.10) and GPT-5.5 (81.08) on COMET — a **0.15-point margin, within
+  the noise.** On the other six measures Anuvad-on-Opus sits *below* plain Opus
+  (e.g. BLEU 33.15 vs 35.45, term accuracy 96.7% vs 99.0%). So "Anuvad ranks #1"
+  is true **only** for COMET; do not read it as beating Opus across the board.
+- **The product layer helps weak bases and is roughly neutral on strong ones.**
+  On Sarvam it lifted most measures (Anuvad-Sarvam vs raw Sarvam-v1); on a base as
+  strong as Opus or GPT-5.5 the glossary's enforced terminology diverges from the
+  reference wording, which trims overlap scores even as COMET holds. The layer's
+  durable value is **consistency and the things this benchmark does not measure**
+  (see below), not a headline win on sentence overlap.
 - **The April API-error problem is gone.** The GPT-5.4-mini re-run completed all
   500 with **0 errors** and scored higher (COMET 80.21 vs 79.71) than April's
-  111-error run — the errors had been depressing its numbers.
+  111-error run.
 - **mayura:v1 is the weakest option** for legal Hindi (raw COMET 76.8, term
-  85.9%), well below `sarvam-translate:v1` — confirming `sarvam-translate:v1`
-  (which Anuvad uses) is the right Sarvam model.
+  85.9%) — confirming `sarvam-translate:v1` (which Anuvad uses) is the right
+  Sarvam model.
 
 No single system wins every metric; we report all seven so readers can weight
 them for their own use case.

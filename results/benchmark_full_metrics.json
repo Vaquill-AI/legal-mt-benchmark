@@ -10,6 +10,32 @@
   },
   "systems": [
     {
+      "system": "Anuvad-opus",
+      "type": "product",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 33.15,
+      "chrf_pp": 59.17,
+      "ter": 53.48,
+      "meteor": 53.03,
+      "bertscore_f1": 88.63,
+      "comet": 81.25,
+      "term_acc_pct": 96.7
+    },
+    {
+      "system": "Claude-Opus-4.8",
+      "type": "raw_model",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 35.45,
+      "chrf_pp": 61.62,
+      "ter": 51.72,
+      "meteor": 55.16,
+      "bertscore_f1": 89.02,
+      "comet": 81.1,
+      "term_acc_pct": 99.0
+    },
+    {
       "system": "GPT-5.5",
       "type": "raw_model",
       "n_scored": 500,
@@ -21,6 +47,19 @@
       "bertscore_f1": 88.2,
       "comet": 81.08,
       "term_acc_pct": 95.7
+    },
+    {
+      "system": "Claude-Sonnet-4.6",
+      "type": "raw_model",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 31.62,
+      "chrf_pp": 58.69,
+      "ter": 55.42,
+      "meteor": 52.39,
+      "bertscore_f1": 88.19,
+      "comet": 80.79,
+      "term_acc_pct": 98.7
     },
     {
       "system": "Anuvad-gpt54mini",
@@ -164,6 +203,19 @@
       "bertscore_f1": 86.83,
       "comet": 79.08,
       "term_acc_pct": 95.0
+    },
+    {
+      "system": "Claude-Haiku-4.5",
+      "type": "raw_model",
+      "n_scored": 500,
+      "errors": 0,
+      "bleu": 25.44,
+      "chrf_pp": 52.54,
+      "ter": 62.7,
+      "meteor": 46.96,
+      "bertscore_f1": 86.25,
+      "comet": 78.72,
+      "term_acc_pct": 93.0
     },
     {
       "system": "Anuvad-sarvam",
