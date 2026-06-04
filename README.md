@@ -48,14 +48,15 @@ sentences for every system.
 
 ## Systems
 
-**Raw models** (simple prompt, no glossary): GPT-5.4, GPT-5.4-mini, GPT-4o,
-GPT-4o-mini, GPT-4.1, GPT-4.1-mini, Sarvam Translate v1, Google Translate.
+**Raw models** (simple prompt, no glossary): GPT-5.5, GPT-5.4, GPT-5.4-mini,
+GPT-4o, GPT-4o-mini, GPT-4.1, GPT-4.1-mini, Sarvam Translate v1, Sarvam
+mayura:v1, Google Translate.
 
-**Products** (a base engine + a domain layer): **Anuvad** on three bases
-(`gpt54`, `gpt54mini`, `sarvam`). Anuvad adds an 83,355-term legal glossary
-(Government of India's Vidhi Shabdavali), legal-term / citation / date / currency
-preservation, and a review pass. This lets us measure the **lift the product
-layer adds on each base model**.
+**Products** (a base engine + a domain layer): **Anuvad** on five bases
+(GPT-5.5, GPT-5.4, GPT-5.4-mini, Sarvam Translate v1, Sarvam mayura:v1). Anuvad
+adds an 83,355-term legal glossary (Government of India's Vidhi Shabdavali),
+legal-term / citation / date / currency preservation, and a review pass. This
+lets us measure the **lift the product layer adds on each base model**.
 
 ---
 
