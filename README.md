@@ -14,6 +14,8 @@ independent re-runs welcome.
 
 ---
 
+[![Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/GQtnwxf8nQ)
+
 ## Why this exists
 
 General MT benchmarks do not reflect **legal** translation, where a wrong term
@@ -327,3 +329,7 @@ Code: Apache-2.0 (see `LICENSE`). The dataset is the property of its authors
 contain our systems' outputs plus the dataset's reference sentences for scoring
 transparency; if the upstream authors object to reference redistribution we will
 replace references with hashes.
+
+## Community
+
+Questions, ideas, or want to contribute? Join the Vaquill community on [Discord](https://discord.gg/GQtnwxf8nQ).
